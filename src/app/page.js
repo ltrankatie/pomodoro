@@ -43,7 +43,12 @@ export default function Home() {
     isOnBreak,
   ]);
   return (
-    <main className={styles.main}>
+    <main className={styles.main} style={{
+      backgroundColor: isOnBreak ? "#16a085" : "#b33939",
+      transition: "all 1.0s ease",
+      WebkitTransition: "all 1.0s ease",
+      MozTransition: "all 1.0s ease"
+  }}>
       <div className={styles.description}>
       <Timer timeLeft={timeLeft} />
       <StartButton timerStarted={timerStarted} onStart={toggleTimer} />
