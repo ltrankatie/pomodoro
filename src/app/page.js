@@ -50,7 +50,7 @@ export default function Home() {
       MozTransition: "all 1.0s ease"
   }}>
       <div className={styles.description}>
-      <Timer timeLeft={timeLeft} />
+      <Timer timeLeft={timeLeft} maxTime={POMODORO_TIME_SECS} />
       <StartButton timerStarted={timerStarted} onStart={toggleTimer} />
       <SkipButton timerStarted={timerStarted} onSkip={skipToNextSession} />
       </div>
