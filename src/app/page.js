@@ -1,22 +1,37 @@
 'use client';
 import Image from "next/image";
 import StartButton from "./ui/start-button";
+import SkipButton from "./ui/skip-button";
 import styles from "./page.module.css";
 import Timer from "./ui/timer";
 import { useState, useEffect } from 'react';
 
 const SECONDS_PER_MIN = 60;
 const POMODORO_TIME_SECS = 25 * SECONDS_PER_MIN;
+const BREAK_TIME_SECS = 5 * SECONDS_PER_MIN;
 
 export default function Home() {
   const [timerStarted, setTimerStarted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(POMODORO_TIME_SECS);
+  const [isOnBreak, setIsOnBreak] = useState(false);
   function toggleTimer() {
     setTimerStarted(prev => !prev);
   }
   function countDown() {
     if (timeLeft > 0 && timerStarted) {
       setTimeLeft(timeLeft - 1);
+    }
+    if (timeLeft == 0) {
+      skipToNextSession();
+    }
+  }
+  function skipToNextSession() {
+    if (isOnBreak) {
+      setIsOnBreak(false);
+      setTimeLeft(POMODORO_TIME_SECS);
+    } else {
+      setIsOnBreak(true);
+      setTimeLeft(BREAK_TIME_SECS);
     }
   }
   useEffect(() => {
@@ -25,12 +40,14 @@ export default function Home() {
   }, [
     timeLeft,
     timerStarted,
+    isOnBreak,
   ]);
   return (
     <main className={styles.main}>
       <div className={styles.description}>
       <Timer timeLeft={timeLeft} />
       <StartButton timerStarted={timerStarted} onStart={toggleTimer} />
+      <SkipButton timerStarted={timerStarted} onSkip={skipToNextSession} />
       </div>
     </main>
   );
