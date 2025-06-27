@@ -20,7 +20,6 @@ export default function Timer({ timeLeft, maxTime }) {
   return (
     <div style={{ width: '80%', maxWidth: '600px' }}>
     <CircularProgressbar
-   
   value={maxTime - timeLeft}
   maxValue={maxTime}
   text={secondsToTimeText(timeLeft)}
